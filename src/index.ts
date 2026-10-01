@@ -161,7 +161,7 @@ function transformTags(tags: ExifTags): string[] {
  * Transform delete tags array into ExifTool command-line arguments
  */
 function transformDeleteTags(tags: ExifTags): string[] {
-	return Array.isArray(tags) ? tags.flatMap((tag) => `-${tag}= `) : [`-${tag}= `];
+	return Array.isArray(tags) ? tags.flatMap((tag) => `-${tag}= `) : [`-${tags}= `];
 }
 
 /**
