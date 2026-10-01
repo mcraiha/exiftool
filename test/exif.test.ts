@@ -543,6 +543,6 @@ describe("Metadata deletion Handling", () => {
 		if (!readAfterDeleteResult.data) throw new Error("Read failed");
 
 		const parsedAfterDelete = JSON.parse(readAfterDeleteResult.data)[0];
-		expect(parsedAfterDelete.Artist).toBe(undefined);
+		expect(parsedAfterDelete.Artist).toBeUndefined();
 	});
 });
