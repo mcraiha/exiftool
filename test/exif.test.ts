@@ -503,12 +503,12 @@ describe("Metadata deletion Handling", () => {
 
 	it("should handle deletion of added metadata (baseline test)", async () => {
 		const testJpegFile = createTestJpeg();
-		const englishText = "Hello World";
+		const englishText = "Nice photo";
 
 		const writeResult = await writeMetadata(
 			testJpegFile,
 			{
-				Artist: englishText,
+				Description: englishText,
 			},
 			{
 				args: [],
@@ -524,13 +524,13 @@ describe("Metadata deletion Handling", () => {
 		});
 
 		expect(readAfterWriteResult.success).toBe(true);
-		if (!readAfterWriteResult.data) throw new Error("Read failed");
+		if (!readAfterWriteResult.data) throw new Error("Read after write failed");
 
 		const parsedAfterWrite = JSON.parse(readAfterWriteResult.data)[0];
-		expect(parsedAfterWrite.Artist).toBe(englishText);
+		expect(parsedAfterWrite.Description).toBe(englishText);
 
 
-		const deleteResult = await deleteMetadata(modified, "Artist");
+		const deleteResult = await deleteMetadata(modified, "Description");
 		expect(deleteResult.success).toBe(true);
 		if (!deleteResult.data) throw new Error("Delete failed");
 
@@ -540,9 +540,9 @@ describe("Metadata deletion Handling", () => {
 		});
 
 		expect(readAfterDeleteResult.success).toBe(true);
-		if (!readAfterDeleteResult.data) throw new Error("Read failed");
+		if (!readAfterDeleteResult.data) throw new Error("Read after delete failed");
 
 		const parsedAfterDelete = JSON.parse(readAfterDeleteResult.data)[0];
-		expect(parsedAfterDelete.Artist).toBeUndefined();
+		expect(parsedAfterDelete.Description).toBeUndefined();
 	});
 });
