@@ -558,7 +558,7 @@ describe("Metadata deletion Handling", () => {
 		expect(result.success).toBe(true);
 		if (!result.data) throw new Error("Parse failed");
 
-		const parsedAfterWrite = JSON.parse(readAfterWriteResult.data)[0];
+		const parsedAfterWrite = JSON.parse(result.data)[0];
 		expect(parsedAfterWrite.GPSLatitude).toBe(`0 deg 0' 0.00" N`);
 		expect(parsedAfterWrite.GPSLongitude).toBe(`0 deg 0' 0.00" E`);
 
