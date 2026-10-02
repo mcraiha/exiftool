@@ -545,4 +545,38 @@ describe("Metadata deletion Handling", () => {
 		const parsedAfterDelete = JSON.parse(readAfterDeleteResult.data)[0];
 		expect(parsedAfterDelete.Description).toBeUndefined();
 	});
+
+	it("should handle deletion of GPS metadata", async () => {
+		const jpgBuffer = await readFile("test/data/null_island_gps.jpg");
+
+		const ff = new File([jpgBuffer], "null_island_gps.jpg", { type: "image/jpeg" });
+
+		const result = await parseMetadata(ff, {
+			args: ["-json"],
+		});
+
+		expect(result.success).toBe(true);
+		if (!result.data) throw new Error("Parse failed");
+
+		const parsedAfterWrite = JSON.parse(readAfterWriteResult.data)[0];
+		expect(parsedAfterWrite.GPSLatitude).toBe(`0 deg 0' 0.00" N`);
+		expect(parsedAfterWrite.GPSLongitude).toBe(`0 deg 0' 0.00" E`);
+
+
+		const deleteResult = await deleteMetadata(ff, [ "GPSLatitude", "GPSLongitude"]);
+		expect(deleteResult.success).toBe(true);
+		if (!deleteResult.data) throw new Error("Delete failed");
+
+		const deleted = new File([deleteResult.data], "null_island_gps-deleted.jpg");
+		const readAfterDeleteResult = await parseMetadata(deleted, {
+			args: ["-json"],
+		});
+
+		expect(readAfterDeleteResult.success).toBe(true);
+		if (!readAfterDeleteResult.data) throw new Error("Read after delete failed");
+
+		const parsedAfterDelete = JSON.parse(readAfterDeleteResult.data)[0];
+		expect(parsedAfterDelete.GPSLatitude).toBeUndefined();
+		expect(parsedAfterDelete.GPSLongitude).toBeUndefined();
+	});
 });
