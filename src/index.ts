@@ -447,13 +447,13 @@ export async function writeMetadata(
 /**
  * Delete metadata from a file using ExifTool
  *
- * This function modifies an existing file by deleting metadata tags.
+ * This function modifies an existing file by deleting metadata tag(s).
  * The operation runs entirely in the browser using WebAssembly without requiring server uploads.
  *
  * @param file File for metadata deletion (Browser File object or Binaryfile)
  * @param tags Array containing metadata tags to delete
- * @param options Configuration options for the write operation
- * @returns Promise resolving to the write operation result containing the modified file data
+ * @param options Configuration options for the delete operation
+ * @returns Promise resolving to the delete operation result containing the modified file data
  *
  * @example
  * // Basic usage with browser File object
